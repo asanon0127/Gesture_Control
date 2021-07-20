@@ -9,14 +9,12 @@ class handDetector:
         self.maxHands = maxHands#ての数
         self.detectionCon = detectionCon#検出の信頼度:50%
         self.trackCon = trackCon #追跡の信頼度:50%
-
         #mediapipeのモジュールにアクセス
         self.mpHands = mp.solutions.hands
         self.hands = self.mpHands.Hands(self.mode, self.maxHands,
                                         self.detectionCon, self.trackCon)
         #手の21箇所にlandmarkを描画
         self.mpDraw = mp.solutions.drawing_utils
- 
     #点と点を結ぶ線を描画
     def findHands(self, img, draw=True):
         #BGRをRGBに
@@ -29,7 +27,6 @@ class handDetector:
                     self.mpDraw.draw_landmarks(img, handLms,
                                                self.mpHands.HAND_CONNECTIONS)
         return img
-    
     #各点に大きい丸を描画
     def findPosition(self, img, handNo=0, draw=True):
  
@@ -45,10 +42,7 @@ class handDetector:
                 lmList.append([id, finx, finy])
                 if draw:
                     cv2.circle(img, (finx, finy), 15, (255, 80, 150), cv2.LINE_8)
- 
         return lmList
- 
- 
 def main():
     pTime = 0
     cTime = 0
