@@ -55,19 +55,12 @@ def main():
         img = cv2.flip(img,1)#画像左右反転
         img = detector.findHands(img)#点と点を結ぶ線
         lmList = detector.findPosition(img)#点に大きい丸をつける
-        if len(lmList) != 0:
-            #print(lmList[4])
- 
-            cTime = time.time()
-            fps = 1 / (cTime - pTime)
-            pTime = cTime
-            #長方形(画像,(左上),(右下),色,線の太さ)
-            cv2.rectangle(img,(1000,50),(1200,130),(0,0,255),5)
-            #テキスト(画像,(テキスト),描画位置,スタイル,文字サイズ,色,太さ)
-            cv2.putText(img, str("ON"), (1020, 100), cv2.FONT_HERSHEY_PLAIN, 3,
-                        (255, 0, 255), 3)
+        
+        cTime = time.time()
+        fps = 1 / (cTime - pTime)
+        pTime = cTime
 
-            cv2.putText(img, str(int(fps)), (10, 70), cv2.FONT_HERSHEY_PLAIN, 3,
+        cv2.putText(img, "fps:"+str(int(fps)), (10, 70), cv2.FONT_HERSHEY_PLAIN, 3,
                         (255, 0, 255), 3)
             #もし画像をキャッチできていたら
         if success:

@@ -173,14 +173,14 @@ class Rimote_Controler:
                     self.state = 1
                     self.word = "LOOK_LIGHT!"
                     self.redline(10)
-                elif ser.in_waiting>0:
-                    self.apper = ser.readline().strip().decode('UTF-8')
-                    if self.apper == 't':
-                        self.state = 1
-                        self.word = "turn_on!"
-                        print("True")
-                        self.redline(10)
-                        print("Tですよ")
+                # elif ser.in_waiting>0:
+                #     self.apper = ser.readline().strip().decode('UTF-8')
+                #     if self.apper == 't':
+                #         self.state = 1
+                #         self.word = "turn_on!"
+                #         print("True")
+                #         self.redline(10)
+                #         print("Tですよ")
             self.value_control()
     def air_change_mode(self,img,lmList):
         if self.kiri != SEPA and choX == posX[1] and choY == posY[2]:
@@ -296,7 +296,7 @@ class Rimote_Controler:
         print("data番号:"+str(count))
         self.infreadNumber=count
         if self.touch == 0:
-            ser.write(str.encode(data[count]))
+            # ser.write(str.encode(data[count]))
             print(data[count])
             self.feedback()
             print("okey")
@@ -311,40 +311,39 @@ class Rimote_Controler:
                     7, (0, 0, 0), 14)
             cv2.putText(img, str("loading"), (wCam//2-200, hCam//2+150), cv2.FONT_HERSHEY_PLAIN,
                     7, (255, 0, 0), 10)
-            if self.pretime == 2:
-                place = data[count]
-                ser.write(str.encode('r'))
-                while(True):
-                    self.pretime = 0
-                    closeTimeN = time.time()
-                    if closeTimeN - closeTimeP == 5.0:
-                        closeTimeN = 0
-                        closeTimeP = 0
-                        break
-                    if ser.in_waiting>0:
-                        data[count] = 0
-                        data[count] = ser.readline().strip().decode('UTF-8')
-                        print(data[count])
-                        if len(data[count]) >= 10:
-                            print(data[count])
-                            cv2.rectangle(img,(0,0),(wCam,hCam),(0,0,0),cv2.FILLED)
-                            cv2.circle(img,(wCam//2,hCam//2+100),250,(200,0,100),cv2.FILLED)
-                            cv2.circle(img,(wCam//2,hCam//2+100),250,(0,0,0),10,lineType=cv2.LINE_8)
-                            self.state = 1
-                            self.word = "RECEIVE!"
-                            break
-                        if data[count] == 'NG':
-                            self.state = 1
-                            data[count] = place
-                            self.word = "NOT FOUND!"
-                            break
-                        elif data[count] == "PO":
-                            print("no power")
-                            self.state = 1
-                            data[count] = place
-                            self.word = "NO POWER"
-                            # self.change(self.state,self.word)
-                            break
+            # if self.pretime == 2:
+            #     place = data[count]
+            #     ser.write(str.encode('r'))
+            #     while(True):
+            #         self.pretime = 0
+            #         closeTimeN = time.time()
+            #         if closeTimeN - closeTimeP == 5.0:
+            #             closeTimeN = 0
+            #             closeTimeP = 0
+            #             break
+            #         if ser.in_waiting>0:
+            #             data[count] = 0
+            #             data[count] = ser.readline().strip().decode('UTF-8')
+            #             print(data[count])
+            #             if len(data[count]) >= 10:
+            #                 print(data[count])
+            #                 cv2.rectangle(img,(0,0),(wCam,hCam),(0,0,0),cv2.FILLED)
+            #                 cv2.circle(img,(wCam//2,hCam//2+100),250,(200,0,100),cv2.FILLED)
+            #                 cv2.circle(img,(wCam//2,hCam//2+100),250,(0,0,0),10,lineType=cv2.LINE_8)
+            #                 self.state = 1
+            #                 self.word = "RECEIVE!"
+            #                 break
+            #             if data[count] == 'NG':
+            #                 self.state = 1
+            #                 data[count] = place
+            #                 self.word = "NOT FOUND!"
+            #                 break
+            #             elif data[count] == "PO":
+            #                 print("no power")
+            #                 self.state = 1
+            #                 data[count] = place
+            #                 self.word = "NO POWER"
+            #                 break
     def feedback(self):
         if self.state == 1:
             if self.stateP == 0:
@@ -778,8 +777,8 @@ class vollume():
         if self.flag == 7 and angle2 <= -45 and angle2 >= -70:
             self.flag = 0
 
-path = "/Users/asanoryo/Desktop/ard/Gesture_Control/test.txt"
-image_path = "/Users/asanoryo/Desktop/ard/Gesture_Control/FingerImages/"
+path = "./test.txt"
+image_path = "./FingerImages/"
 
 with open(path,mode="r") as f1:
     i = 0
@@ -803,7 +802,7 @@ count = 1
 z1,z2,z = 0,0,0
 OnOff = 1
 
-ser = serial.Serial('/dev/cu.usbmodem14201', 57600, timeout=6.0)
+# ser = serial.Serial('/dev/cu.usbmodem14201', 57600, timeout=6.0)
 
 white = (255,255,255)
 HandDetector = htm.handDetector()               #手認識
@@ -915,4 +914,4 @@ while True:
         cap.release()
         cv2.destroyAllWindows()
         break
-ser.close()
+# ser.close()
